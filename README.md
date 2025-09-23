@@ -1,2 +1,2 @@
-# Analisador-l-xico-e-tabela-de-s-mbolos-LFAC
+# Analisador léxico e tabela de símbolos-LFAC
 Trabalho da disciplina de Linguagens Formais Autômatos e compiladores
