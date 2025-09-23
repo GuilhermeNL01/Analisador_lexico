@@ -1,6 +1,7 @@
-program erro2
-var x: integer;
-begin
-  x := 1
-end
+program erro2;
+var
+   1abc : integer;   { identificador não pode começar com número }
 
+begin
+   1abc := 5;
+end.

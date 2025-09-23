@@ -1,4 +1,4 @@
-program teste;
+program exemplo1;
 var x, y: integer;
 begin
   x := 10;

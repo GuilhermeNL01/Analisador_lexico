@@ -1,4 +1,4 @@
-program calc;
+program exemplo2;
 var a: integer;
 begin
   a := 2 * (3 + 4);
