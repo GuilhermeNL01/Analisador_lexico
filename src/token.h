@@ -32,6 +32,8 @@ typedef enum {
     TK_DOT,    // .
 
     // Erros
+    TK_INVALID,
+    TK_ERROR,
     TK_UNKNOWN,
     TK_EOF
 } TokenType;
