@@ -7,7 +7,7 @@
 #include "token.h"
 
 static void printToken(const Token *token) {
-    printf("[%d:%d] type=%d lexema=\"%s\"\n", token->linha, token->coluna, token->type, token->lexema);
+    printf("<%s, %s> [linha=%d, coluna=%d]\n", tokenTypeToName(token->type), token->lexema, token->linha, token->coluna);
 }
 
 int main(int argc, char **argv) {
@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
         if (token.type == TK_INVALID) continue;
 
         printToken(&token);
-        fprintf(lexFile, "[%d:%d] type=%d lexema=\"%s\"\n", token.linha, token.coluna, token.type, token.lexema);
+        fprintf(lexFile, "<%s, %s> [linha=%d, coluna=%d]\n", tokenTypeToName(token.type), token.lexema, token.linha, token.coluna);
 
         if (token.type == TK_ERROR) {
             fprintf(stderr, "Erro léxico na linha %d, coluna %d: %s\n", token.linha, token.coluna, token.lexema);

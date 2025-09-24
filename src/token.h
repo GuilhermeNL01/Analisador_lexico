@@ -30,6 +30,12 @@ typedef enum {
     TK_LPAREN, // (
     TK_RPAREN, // )
     TK_DOT,    // .
+    TK_COLON,  // :
+    TK_LBRACE, // {
+    TK_RBRACE, // }
+
+    // Literais
+    TK_STRING, // '...'
 
     // Erros
     TK_INVALID,
@@ -45,5 +51,8 @@ typedef struct {
     int linha;
     int coluna;
 } Token;
+
+// Retorna o nome amigável do token conforme especificação (ex.: OP_AD, SMB_SEM, ID, program)
+const char* tokenTypeToName(TokenType type);
 
 #endif

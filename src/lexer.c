@@ -42,12 +42,12 @@ void closeLexer(Lexer *lexer) {
 }
 
 // Cria token
-static Token makeToken(Lexer *lexer, TokenType type, const char *lexema) {
+static Token makeTokenAt(TokenType type, const char *lexema, int linha, int coluna) {
     Token token;
     token.type = type;
     strcpy(token.lexema, lexema);
-    token.linha = lexer->linha;
-    token.coluna = lexer->coluna;
+    token.linha = linha;
+    token.coluna = coluna;
     return token;
 }
 
@@ -56,14 +56,20 @@ Token getNextToken(Lexer *lexer) {
     char buffer[64];
     int i = 0;
     int c;
+    int startLinha = 0;
+    int startColuna = 0;
 
     // Ignorar espaços e quebras
     do {
         c = nextChar(lexer);
     } while (isspace(c));
 
+    // posição inicial do token
+    startLinha = lexer->linha;
+    startColuna = lexer->coluna;
+
     if (c == EOF) {
-        return makeToken(lexer, TK_EOF, "EOF");
+        return makeTokenAt(TK_EOF, "EOF", startLinha, startColuna);
     }
 
     // Identificadores ou palavras-chave
@@ -80,10 +86,10 @@ Token getNextToken(Lexer *lexer) {
 
         int idx = lookupSymbol(lexer->symbolTable, buffer);
         if (idx != -1) {
-            return makeToken(lexer, lexer->symbolTable->symbols[idx].type, buffer);
+            return makeTokenAt(lexer->symbolTable->symbols[idx].type, buffer, startLinha, startColuna);
         } else {
             insertSymbol(lexer->symbolTable, buffer, TK_ID);
-            return makeToken(lexer, TK_ID, buffer);
+            return makeTokenAt(TK_ID, buffer, startLinha, startColuna);
         }
     }
 
@@ -107,43 +113,63 @@ Token getNextToken(Lexer *lexer) {
         buffer[i] = '\0';
         unreadChar(lexer, c);
 
-        return makeToken(lexer, isReal ? TK_REALNUM : TK_INT, buffer);
+        return makeTokenAt(isReal ? TK_REALNUM : TK_INT, buffer, startLinha, startColuna);
+    }
+
+    // Strings '...'
+    if (c == '\'') {
+        i = 0;
+        while (1) {
+            int d = nextChar(lexer);
+            if (d == '\n' || d == EOF) {
+                return makeTokenAt(TK_ERROR, "string nao-fechada", startLinha, startColuna);
+            }
+            if (d == '\'') {
+                buffer[i] = '\0';
+                return makeTokenAt(TK_STRING, buffer, startLinha, startColuna);
+            }
+            if (i < (int)sizeof(buffer) - 1) {
+                buffer[i++] = (char)d;
+            }
+        }
     }
 
     // Operadores e símbolos
     switch (c) {
-        case '+': return makeToken(lexer, TK_PLUS, "+");
-        case '-': return makeToken(lexer, TK_MINUS, "-");
-        case '*': return makeToken(lexer, TK_MUL, "*");
-        case '/': return makeToken(lexer, TK_DIV, "/");
-        case ';': return makeToken(lexer, TK_SEM, ";");
-        case ',': return makeToken(lexer, TK_COMMA, ",");
-        case '(': return makeToken(lexer, TK_LPAREN, "(");
-        case ')': return makeToken(lexer, TK_RPAREN, ")");
-        case '.': return makeToken(lexer, TK_DOT, ".");
+        case '+': return makeTokenAt(TK_PLUS, "+", startLinha, startColuna);
+        case '-': return makeTokenAt(TK_MINUS, "-", startLinha, startColuna);
+        case '*': return makeTokenAt(TK_MUL, "*", startLinha, startColuna);
+        case '/': return makeTokenAt(TK_DIV, "/", startLinha, startColuna);
+        case ';': return makeTokenAt(TK_SEM, ";", startLinha, startColuna);
+        case ',': return makeTokenAt(TK_COMMA, ",", startLinha, startColuna);
+        case '(': return makeTokenAt(TK_LPAREN, "(", startLinha, startColuna);
+        case ')': return makeTokenAt(TK_RPAREN, ")", startLinha, startColuna);
+        case '.': return makeTokenAt(TK_DOT, ".", startLinha, startColuna);
+        case '{': return makeTokenAt(TK_LBRACE, "{", startLinha, startColuna);
+        case '}': return makeTokenAt(TK_RBRACE, "}", startLinha, startColuna);
         case ':': {
             c = nextChar(lexer);
-            if (c == '=') return makeToken(lexer, TK_ASS, ":=");
+            if (c == '=') return makeTokenAt(TK_ASS, ":=", startLinha, startColuna);
             unreadChar(lexer, c);
-            return makeToken(lexer, TK_UNKNOWN, ":");
+            return makeTokenAt(TK_COLON, ":", startLinha, startColuna);
         }
-        case '=': return makeToken(lexer, TK_EQ, "=");
+        case '=': return makeTokenAt(TK_EQ, "=", startLinha, startColuna);
         case '<': {
             c = nextChar(lexer);
-            if (c == '=') return makeToken(lexer, TK_LE, "<=");
-            if (c == '>') return makeToken(lexer, TK_NE, "<>");
+            if (c == '=') return makeTokenAt(TK_LE, "<=", startLinha, startColuna);
+            if (c == '>') return makeTokenAt(TK_NE, "<>", startLinha, startColuna);
             unreadChar(lexer, c);
-            return makeToken(lexer, TK_LT, "<");
+            return makeTokenAt(TK_LT, "<", startLinha, startColuna);
         }
         case '>': {
             c = nextChar(lexer);
-            if (c == '=') return makeToken(lexer, TK_GE, ">=");
+            if (c == '=') return makeTokenAt(TK_GE, ">=", startLinha, startColuna);
             unreadChar(lexer, c);
-            return makeToken(lexer, TK_GT, ">");
+            return makeTokenAt(TK_GT, ">", startLinha, startColuna);
         }
         default:
             buffer[0] = c;
             buffer[1] = '\0';
-            return makeToken(lexer, TK_UNKNOWN, buffer);
+            return makeTokenAt(TK_ERROR, "caractere invalido", startLinha, startColuna);
     }
 }

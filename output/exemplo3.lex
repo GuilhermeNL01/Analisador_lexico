@@ -1,16 +1,16 @@
-[1:7] type=0 lexema="program"
-[1:16] type=11 lexema="exemplo3"
-[1:17] type=25 lexema=";"
-[2:3] type=1 lexema="var"
-[2:5] type=11 lexema="r"
-[2:6] type=32 lexema=":"
-[2:11] type=3 lexema="real"
-[2:12] type=25 lexema=";"
-[4:-1] type=4 lexema="begin"
-[5:3] type=11 lexema="r"
-[5:6] type=24 lexema=":="
-[5:11] type=13 lexema="3.14"
-[5:12] type=25 lexema=";"
-[6:3] type=5 lexema="end"
-[6:4] type=29 lexema="."
-[8:1] type=33 lexema="EOF"
+<program, program> [linha=1, coluna=1]
+<ID, exemplo3> [linha=1, coluna=9]
+<SMB_SEM, ;> [linha=1, coluna=17]
+<var, var> [linha=2, coluna=1]
+<ID, r> [linha=2, coluna=5]
+<SMB_COL, :> [linha=2, coluna=6]
+<real, real> [linha=2, coluna=8]
+<SMB_SEM, ;> [linha=2, coluna=12]
+<begin, begin> [linha=3, coluna=1]
+<ID, r> [linha=5, coluna=3]
+<OP_ASS, :=> [linha=5, coluna=5]
+<REAL, 3.14> [linha=5, coluna=8]
+<SMB_SEM, ;> [linha=5, coluna=12]
+<end, end> [linha=6, coluna=1]
+<SMB_DOT, .> [linha=6, coluna=4]
+<EOF, EOF> [linha=8, coluna=1]

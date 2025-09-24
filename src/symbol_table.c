@@ -45,6 +45,6 @@ int insertSymbol(SymbolTable *table, const char *lexema, TokenType type) {
 void printSymbolTable(SymbolTable *table) {
     printf("\n=== Tabela de Símbolos ===\n");
     for (int i = 0; i < table->count; i++) {
-        printf("%d: %s (%d)\n", i, table->symbols[i].lexema, table->symbols[i].type);
+        printf("%d: %s (%s)\n", i, table->symbols[i].lexema, tokenTypeToName(table->symbols[i].type));
     }
 }

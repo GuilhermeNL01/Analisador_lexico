@@ -8,15 +8,42 @@ O programa foi desenvolvido em C e utiliza estruturas para representar tokens e 
 
 ---
 
+## Funcionalidades Principais
+
+- **Reconhecimento de tokens** (case-insensitive):
+  - Palavras-chave: `program`, `var`, `integer`, `real`, `begin`, `end`, `if`, `then`, `else`, `while`, `do`.
+  - Identificadores: `ID` (letra seguida de letras/dígitos).
+  - Números: inteiros (`INTEGER`) e reais com ponto (`REAL`, ex.: `2.5`).
+  - Operadores: `OP_AD(+)`, `OP_MIN(-)`, `OP_MUL(*)`, `OP_DIV(/)`, `OP_ASS(:=)`, `OP_EQ(=)`, `OP_NE( <>)`, `OP_LT(<)`, `OP_LE(<=)`, `OP_GT(>)`, `OP_GE(>=)`.
+  - Símbolos: `SMB_SEM(;)`, `SMB_COM(,)`, `SMB_OPA(()`, `SMB_CPA())`, `SMB_DOT(.)`, `SMB_COL(:)`, `SMB_OBC({)`, `SMB_CBC(})`.
+  - Literais de string: `STRING` entre aspas simples `'...'`.
+
+- **Posição exata dos tokens**: cada token é emitido com a posição de início `[linha, coluna]`.
+
+- **Tabela de Símbolos (TS)**:
+  - Iniciada com todas as palavras-chave.
+  - Apenas palavras-chave e identificadores são cadastrados; sem duplicatas.
+  - Impressão legível mostrando `lexema` e o nome do token.
+
+- **Erros léxicos tratados**:
+  - Caractere inválido: reportado como `LEX_ERROR` com linha e coluna.
+  - String não-fechada antes da quebra de linha/EOF: `LEX_ERROR`.
+  - Comentários não são parte da linguagem alvo (MicroPascal desta atividade), então `{` e `}` são tratados como símbolos.
+
+- **Formato do arquivo de saída `.lex`**:
+  - Cada linha segue o formato: `<nome, lexema> [linha=X, coluna=Y]`.
+  - Ex.: `<OP_AD, +> [linha=5, coluna=12]` ou `<ID, soma> [linha=3, coluna=1]`.
+
 ## Estrutura de Arquivos
 
 ### `token.h`
 
-- Define o **enum **``, com todos os tipos de tokens do MicroPascal (palavras-chave, operadores, símbolos, números, identificadores e erros).
+- Define o enum `TokenType`, com todos os tipos de tokens do MicroPascal (palavras-chave, operadores, símbolos, números, identificadores, literais e erros).
 - Define a struct `Token`, que contém:
   - `type`: tipo do token (TokenType)
   - `lexema`: texto correspondente
   - `linha` e `coluna`: posição do token no arquivo
+ - Define `tokenTypeToName(TokenType)`: converte o tipo para o nome exibido no `.lex` (ex.: `OP_AD`, `SMB_SEM`, `ID`, etc.).
 
 ### `symbol_table.h` / `symbol_table.c`
 
@@ -42,15 +69,16 @@ O programa foi desenvolvido em C e utiliza estruturas para representar tokens e 
 
   - `initLexer`: abre o arquivo fonte e inicializa o lexer
   - `closeLexer`: fecha o arquivo
-  - `getNextToken`: lê o próximo token válido do arquivo
+  - `getNextToken`: lê o próximo token válido do arquivo e retorna também a posição de início do token
 
-- Lógica de reconhecimento de tokens:
+- Lógica de reconhecimento de tokens (AFD implementado em código):
 
   - Ignora espaços, quebras de linha e tabulações
   - Reconhece **identificadores e palavras-chave**
   - Reconhece **números inteiros e reais**
   - Reconhece **operadores e símbolos** (`+`, `-`, `*`, `/`, `:=`, `;`, etc.)
-  - Identifica **tokens desconhecidos ou inválidos** (`TK_UNKNOWN`, `TK_INVALID`)
+  - Reconhece literais de **string** `'...'` e reporta **string não-fechada** como erro
+  - Reporta **caracteres inválidos** como `LEX_ERROR`
 
 ### `main.c`
 
@@ -59,10 +87,9 @@ O programa foi desenvolvido em C e utiliza estruturas para representar tokens e 
   - Inicializar a Tabela de Símbolos e o Lexer
   - Criar a pasta `output` se não existir
   - Executar o loop de reconhecimento de tokens:
-    - Ignorar tokens inválidos
-    - Imprimir tokens no console
-    - Salvar tokens no arquivo `.lex`
-    - Detectar e reportar erros léxicos (`TK_ERROR`)
+    - Imprimir tokens no console no formato `<nome, lexema> [linha=X, coluna=Y]`
+    - Salvar tokens no arquivo `.lex` com o mesmo formato
+    - Detectar e reportar erros léxicos (`LEX_ERROR`) tanto no console quanto no `.lex`
   - Ao final, imprimir a Tabela de Símbolos
 
 ### Makefile
@@ -95,26 +122,26 @@ end.
 ### `erro2.pas`
 
 ```pascal
-program erro2
+program erro2;
 var x: integer;
 begin
-  x := 1
-end
+  x := 1;
+  y := 2;  { uso de identificador não declarado é erro semântico/sintático, não léxico }
+end.
 ```
 
-- Erros léxicos: falta de `;` após `1`
+- Observação: erros de sintaxe/semântica não são detectados nesta etapa léxica. O `.lex` ainda é gerado normalmente.
 
 ### `erro3.pas`
 
 ```pascal
 program erro3;
-var x: integer;
 begin
-  x := 1 + ;
+  s := 'string sem fim
 end.
 ```
 
-- Erro léxico: operador `+` sem segundo operando
+- Erro léxico: string não-fechada antes da quebra de linha
 
 ### `exemplo1.pas`
 
@@ -151,7 +178,7 @@ begin
 end.
 ```
 
-- Reconhece números reais (`TK_REALNUM`)
+- Reconhece números reais (`REAL`)
 
 ---
 
@@ -162,7 +189,27 @@ end.
 3. O analisador:
    - Cria/atualiza `output/<arquivo>.lex` com todos os tokens reconhecidos
    - Imprime tokens e Tabela de Símbolos no console
-   - Reporta erros léxicos
+   - Reporta erros léxicos (caractere inválido, string não-fechada)
+
+---
+
+## Nomes dos Tokens (convenção de saída)
+
+- Operadores: `OP_EQ`, `OP_NE`, `OP_LT`, `OP_LE`, `OP_GT`, `OP_GE`, `OP_AD`, `OP_MIN`, `OP_MUL`, `OP_DIV`, `OP_ASS`
+- Símbolos: `SMB_SEM`, `SMB_COM`, `SMB_OPA`, `SMB_CPA`, `SMB_DOT`, `SMB_COL`, `SMB_OBC`, `SMB_CBC`
+- Palavras-chave: `program`, `var`, `integer`, `real`, `begin`, `end`, `if`, `then`, `else`, `while`, `do`
+- Identificador: `ID`
+- Números: `INTEGER`, `REAL`
+- Strings: `STRING`
+- Erros: `LEX_ERROR`
+
+---
+
+## Entregáveis (atividade)
+
+- Figura do AFD (JFLAP) em `docs/`.
+- Código-fonte completo.
+- Relatório técnico (este README) descrevendo as structs e funções, além de testes (mín. 3 corretos e 3 com erro), com as respectivas saídas `.lex` e a Tabela de Símbolos.
 
 Este setup permite testar múltiplos programas MicroPascal e registrar resultados de forma organizada.
 

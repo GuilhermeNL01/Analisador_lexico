@@ -1,35 +1,35 @@
-[1:7] type=0 lexema="program"
-[1:13] type=11 lexema="erro2"
-[1:14] type=25 lexema=";"
-[3:-1] type=1 lexema="var"
-[4:4] type=12 lexema="1"
-[4:7] type=11 lexema="abc"
-[4:9] type=32 lexema=":"
-[4:17] type=2 lexema="integer"
-[4:18] type=25 lexema=";"
-[4:22] type=32 lexema="{"
-[4:36] type=11 lexema="identificador"
-[4:38] type=11 lexema="n"
-[4:39] type=32 lexema="Ã"
-[4:40] type=32 lexema="£"
-[4:41] type=11 lexema="o"
-[4:46] type=11 lexema="pode"
-[4:51] type=11 lexema="come"
-[4:52] type=32 lexema="Ã"
-[4:53] type=32 lexema="§"
-[4:55] type=11 lexema="ar"
-[4:59] type=11 lexema="com"
-[4:61] type=11 lexema="n"
-[4:62] type=32 lexema="Ã"
-[4:63] type=32 lexema="º"
-[4:67] type=11 lexema="mero"
-[4:69] type=32 lexema="}"
-[7:-1] type=4 lexema="begin"
-[8:4] type=12 lexema="1"
-[8:7] type=11 lexema="abc"
-[8:10] type=24 lexema=":="
-[8:12] type=12 lexema="5"
-[8:13] type=25 lexema=";"
-[9:3] type=5 lexema="end"
-[9:4] type=29 lexema="."
-[9:5] type=33 lexema="EOF"
+<program, program> [linha=1, coluna=1]
+<ID, erro2> [linha=1, coluna=9]
+<SMB_SEM, ;> [linha=1, coluna=14]
+<var, var> [linha=2, coluna=1]
+<INTEGER, 1> [linha=4, coluna=4]
+<ID, abc> [linha=4, coluna=5]
+<SMB_COL, :> [linha=4, coluna=9]
+<integer, integer> [linha=4, coluna=11]
+<SMB_SEM, ;> [linha=4, coluna=18]
+<SMB_OBC, {> [linha=4, coluna=22]
+<ID, identificador> [linha=4, coluna=24]
+<ID, n> [linha=4, coluna=38]
+<LEX_ERROR, caractere invalido> [linha=4, coluna=39]
+<LEX_ERROR, caractere invalido> [linha=4, coluna=40]
+<ID, o> [linha=4, coluna=41]
+<ID, pode> [linha=4, coluna=43]
+<ID, come> [linha=4, coluna=48]
+<LEX_ERROR, caractere invalido> [linha=4, coluna=52]
+<LEX_ERROR, caractere invalido> [linha=4, coluna=53]
+<ID, ar> [linha=4, coluna=54]
+<ID, com> [linha=4, coluna=57]
+<ID, n> [linha=4, coluna=61]
+<LEX_ERROR, caractere invalido> [linha=4, coluna=62]
+<LEX_ERROR, caractere invalido> [linha=4, coluna=63]
+<ID, mero> [linha=4, coluna=64]
+<SMB_CBC, }> [linha=4, coluna=69]
+<begin, begin> [linha=6, coluna=1]
+<INTEGER, 1> [linha=8, coluna=4]
+<ID, abc> [linha=8, coluna=5]
+<OP_ASS, :=> [linha=8, coluna=9]
+<INTEGER, 5> [linha=8, coluna=12]
+<SMB_SEM, ;> [linha=8, coluna=13]
+<end, end> [linha=9, coluna=1]
+<SMB_DOT, .> [linha=9, coluna=4]
+<EOF, EOF> [linha=9, coluna=5]

@@ -1,24 +1,24 @@
-[1:7] type=0 lexema="program"
-[1:16] type=11 lexema="exemplo1"
-[1:17] type=25 lexema=";"
-[2:3] type=1 lexema="var"
-[2:5] type=11 lexema="x"
-[2:6] type=26 lexema=","
-[2:8] type=11 lexema="y"
-[2:9] type=32 lexema=":"
-[2:17] type=2 lexema="integer"
-[2:18] type=25 lexema=";"
-[4:-1] type=4 lexema="begin"
-[5:3] type=11 lexema="x"
-[5:6] type=24 lexema=":="
-[5:9] type=12 lexema="10"
-[5:10] type=25 lexema=";"
-[6:3] type=11 lexema="y"
-[6:6] type=24 lexema=":="
-[6:8] type=11 lexema="x"
-[6:10] type=20 lexema="+"
-[6:12] type=12 lexema="5"
-[6:13] type=25 lexema=";"
-[7:3] type=5 lexema="end"
-[7:4] type=29 lexema="."
-[9:1] type=33 lexema="EOF"
+<program, program> [linha=1, coluna=1]
+<ID, exemplo1> [linha=1, coluna=9]
+<SMB_SEM, ;> [linha=1, coluna=17]
+<var, var> [linha=2, coluna=1]
+<ID, x> [linha=2, coluna=5]
+<SMB_COM, ,> [linha=2, coluna=6]
+<ID, y> [linha=2, coluna=8]
+<SMB_COL, :> [linha=2, coluna=9]
+<integer, integer> [linha=2, coluna=11]
+<SMB_SEM, ;> [linha=2, coluna=18]
+<begin, begin> [linha=3, coluna=1]
+<ID, x> [linha=5, coluna=3]
+<OP_ASS, :=> [linha=5, coluna=5]
+<INTEGER, 10> [linha=5, coluna=8]
+<SMB_SEM, ;> [linha=5, coluna=10]
+<ID, y> [linha=6, coluna=3]
+<OP_ASS, :=> [linha=6, coluna=5]
+<ID, x> [linha=6, coluna=8]
+<OP_AD, +> [linha=6, coluna=10]
+<INTEGER, 5> [linha=6, coluna=12]
+<SMB_SEM, ;> [linha=6, coluna=13]
+<end, end> [linha=7, coluna=1]
+<SMB_DOT, .> [linha=7, coluna=4]
+<EOF, EOF> [linha=9, coluna=1]
