@@ -110,13 +110,13 @@ O programa foi desenvolvido em C e utiliza estruturas para representar tokens e 
 
 ```pascal
 program erro1;
-var x: integer;
+var x: integer
 begin
   x := 1;
 end.
 ```
 
-- Sem erros
+- Falta da ; 
 - Tokens reconhecidos: `program`, `erro1`, `;`, `var`, `x`, `:`, `integer`, `;`, `begin`, `x`, `:=`, `1`, `;`, `end`, `.`
 
 ### `erro2.pas`
