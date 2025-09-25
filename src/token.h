@@ -52,7 +52,7 @@ typedef struct {
     int coluna;
 } Token;
 
-// Retorna o nome amigável do token conforme especificação (ex.: OP_AD, SMB_SEM, ID, program)
+// Retorna o nome do token conforme especificação (ex.: OP_AD, SMB_SEM, ID, program)
 const char* tokenTypeToName(TokenType type);
 
 #endif

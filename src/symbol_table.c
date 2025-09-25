@@ -30,7 +30,7 @@ int lookupSymbol(SymbolTable *table, const char *lexema) {
 
 int insertSymbol(SymbolTable *table, const char *lexema, TokenType type) {
     if (lookupSymbol(table, lexema) != -1) {
-        return -1; // já existe
+        return -1; 
     }
     if (table->count >= MAX_SYMBOLS) {
         printf("Erro: tabela de símbolos cheia!\n");
