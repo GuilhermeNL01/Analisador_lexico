@@ -182,6 +182,20 @@ end.
 
 ---
 
+## Exemplos do Analisador Sintático (arquivos .syn)
+
+Para cada arquivo de exemplo, o parser gera `output/<nome>.syn` com a sequência de produções aplicadas:
+
+- Corretos:
+  - `exemplo1.pas` → `output/exemplo1.syn`
+  - `exemplo2.pas` → `output/exemplo2.syn`
+  - `exemplo3.pas` → `output/exemplo3.syn`
+
+- Com erro sintático/léxico (geram sequência parcial e mensagem no formato exigido):
+  - `erro1.pas` (falta ';' em declaração) → `output/erro1.syn`
+  - `erro2.pas` (exemplo com inconsistência sintática) → `output/erro2.syn`
+  - `erro3.pas` (string não-fechada; erro léxico) → `output/erro3.syn`
+
 ## Funcionamento Geral
 
 1. Compilar o projeto usando `make all` ou `make run`
