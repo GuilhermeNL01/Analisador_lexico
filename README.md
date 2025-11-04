@@ -205,6 +205,22 @@ end.
 
 ---
 
+## Analisador Sintático (Parser)
+
+- Implementado como parser recursivo descendente, baseado na gramática fornecida.
+- Função principal: `parsePrograma`, que chama os procedimentos para cada não-terminal:
+  - `programa`, `bloco`, `parte_declaracoes`, `declaracao_variaveis`, `lista_identificadores`, `tipo`,
+    `comando_composto`, `comando`, `atribuicao`, `comando_condicional`, `comando_repetitivo`,
+    `expressao`, `expressao_simples`, `termo`, `fator`.
+- Procedimento `CasaToken` compara o token corrente ao esperado; em caso de sucesso consome o token; em caso de falha, emite erro e encerra.
+- Mensagens de erro (formato exigido):
+  - `nn:token nao esperado [lex].`
+  - `nn:fim de arquivo não esperado.`
+- Saída das produções: a sequência das regras escolhidas é escrita em `output/<arquivo>.syn` e também exibida no console.
+- O parser consome os tokens do analisador léxico (mantendo a geração de `output/<arquivo>.lex`).
+
+---
+
 ## Entregáveis (atividade)
 
 - Figura do AFD (JFLAP) em `docs/`.

@@ -11,7 +11,3 @@
 <OP_ASS, :=> [linha=5, coluna=5]
 <INTEGER, 1> [linha=5, coluna=8]
 <OP_AD, +> [linha=5, coluna=10]
-<SMB_SEM, ;> [linha=5, coluna=12]
-<end, end> [linha=6, coluna=1]
-<SMB_DOT, .> [linha=6, coluna=4]
-<EOF, EOF> [linha=8, coluna=1]

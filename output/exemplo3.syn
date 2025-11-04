@@ -1,0 +1,13 @@
+programa -> program ID ; bloco .
+bloco -> parte_declaracoes comando_composto
+parte_declaracoes -> var declaracao_variaveis { ; declaracao_variaveis } ;
+declaracao_variaveis -> lista_identificadores : tipo
+lista_identificadores -> ID { , ID }
+tipo -> real
+comando_composto -> begin comando ; { comando ; } end
+comando -> atribuicao
+atribuicao -> variavel := expressao
+expressao -> expressao_simples [ relacao expressao_simples ]
+expressao_simples -> [ + | - ] termo { ( + | - ) termo }
+termo -> fator { ( * | / ) fator }
+fator -> numero

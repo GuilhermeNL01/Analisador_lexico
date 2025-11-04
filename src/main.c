@@ -5,6 +5,7 @@
 #include "lexer.h"
 #include "symbol_table.h"
 #include "token.h"
+#include "parser.h"
 
 static void printToken(const Token *token) {
     printf("<%s, %s> [linha=%d, coluna=%d]\n", tokenTypeToName(token->type), token->lexema, token->linha, token->coluna);
@@ -47,30 +48,30 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    // Arquivo de produções sintáticas
+    char synPath[1024];
+    snprintf(synPath, sizeof(synPath), "output/%s.syn", outputFileName);
+    FILE *synFile = fopen(synPath, "w");
+    if (!synFile) {
+        perror("Erro ao criar arquivo .syn");
+        return 1;
+    }
+
     SymbolTable table;
     initSymbolTable(&table);
 
     Lexer lexer;
     initLexer(&lexer, filename, &table);
 
-    printf("Analisando: %s\n", filename);
+    printf("Analisando (Sintático): %s\n", filename);
 
-    while (1) {
-        Token token = getNextToken(&lexer);
-
-        if (token.type == TK_INVALID) continue;
-
-        printToken(&token);
-        fprintf(lexFile, "<%s, %s> [linha=%d, coluna=%d]\n", tokenTypeToName(token.type), token.lexema, token.linha, token.coluna);
-
-        if (token.type == TK_ERROR) {
-            fprintf(stderr, "Erro léxico na linha %d, coluna %d: %s\n", token.linha, token.coluna, token.lexema);
-        }
-
-        if (token.type == TK_EOF) break;
-    }
+    // Parser: consome tokens e registra também no .lex
+    Parser parser;
+    initParser(&parser, &lexer, lexFile, synFile);
+    parsePrograma(&parser);
 
     fclose(lexFile);
+    fclose(synFile);
 
     printf("\nTabela de Símbolos:\n");
     printSymbolTable(&table);

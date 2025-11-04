@@ -21,4 +21,3 @@
 <SMB_SEM, ;> [linha=6, coluna=13]
 <end, end> [linha=7, coluna=1]
 <SMB_DOT, .> [linha=7, coluna=4]
-<EOF, EOF> [linha=9, coluna=1]
