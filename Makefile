@@ -10,7 +10,7 @@ OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BIN_DIR)/%.o)
 
 TARGET := $(BIN_DIR)/bin_lexer
 
-FILE ?= examples/exemplo1.pas
+FILE ?= exemplos/exemplo1.pas
 
 .PHONY: all run clean dirs
 

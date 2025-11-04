@@ -98,7 +98,7 @@ O programa foi desenvolvido em C e utiliza estruturas para representar tokens e 
 - Cria a pasta `output` automaticamente
 - Alvo `run` permite passar qualquer arquivo `.pas`:
   ```bash
-  make run FILE=examples/exemplo1.pas
+  make run FILE=exemplos/exemplo1.pas
   ```
 - Alvo `clean` remove binário e pasta de saída
 
@@ -199,7 +199,7 @@ Para cada arquivo de exemplo, o parser gera `output/<nome>.syn` com a sequência
 ## Funcionamento Geral
 
 1. Compilar o projeto usando `make all` ou `make run`
-2. Executar o analisador passando um arquivo `.pas` com `make run FILE=examples/<arquivo>.pas`
+2. Executar o analisador passando um arquivo `.pas` com `make run FILE=exemplos/<arquivo>.pas`
 3. O analisador:
    - Cria/atualiza `output/<arquivo>.lex` com todos os tokens reconhecidos
    - Imprime tokens e Tabela de Símbolos no console
